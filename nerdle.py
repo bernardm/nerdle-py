@@ -33,7 +33,7 @@ def reset_equations():
 
 
 def start_triggered():
-    global row_index
+    global gRowIndex
 
     for entry in entries[0]:
         entry.config(state='normal')
@@ -71,11 +71,11 @@ def end_game():
     messagebox.showinfo('Nerdle', f'You win!\nThe answer was {selected_equation}')
 
 def submit_triggered():
-    global row_index
+    global gRowIndex
 
     # create string representation of user input
     user_input = ''
-    for entry in entries[row_index + 1]:
+    for entry in entries[gRowIndex]:
         char = entry.get()
         if '' == char:
             messagebox.showerror("Error", "Invalid!\nYou need to enter values in each of the text boxes")
@@ -95,9 +95,9 @@ def submit_triggered():
         messagebox.showerror("Error", "Invalid!\nYour guess does not compute.")
         return
 
-    color = '#f00'
-    for index, char in enumerate(user_input):
-        if char == selected_equation[index]:
+    color = ''
+    for col_index, char in enumerate(user_input):
+        if char == selected_equation[col_index]:
             color= '#6aaa64'
         elif char in selected_equation:
             color = '#c9b458'
@@ -105,17 +105,16 @@ def submit_triggered():
             color = '#787c7e'
 
         colour_footer(char, color, 1)
-        cell = entries[row_index + 1][index]
-        cell.config(readonlybackground=color, state='readonly')
+        entries[gRowIndex][col_index].config(readonlybackground=color, state='readonly')
 
     if user_input == selected_equation:
         end_game()
-    elif row_index == 5:
+    elif gRowIndex == 5:
         print('lost')
         return
     else:
-        row_index = row_index + 1
-        for entry in entries[row_index + 1]:
+        gRowIndex += 1
+        for entry in entries[gRowIndex]:
             entry.config(state='normal')
 
 
@@ -140,7 +139,7 @@ HELP_WIDTH, HELP_HEIGHT = 440, 755
 STATS_WIDTH, STATS_HEIGHT = 395, 450
 MAX_LABEL_WIDTH = 30
 
-row_index, word_index = -1, 0
+gRowIndex, word_index = 0, 0
 games, wins, attempts = 0, 0, 0
 start = False
 winningpercentage, currentstreak, maxstreak = 0, 0, 0
