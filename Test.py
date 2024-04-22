@@ -231,7 +231,7 @@ stats_window.withdraw()
 frame = Frame(root, padx=10, pady=10)
 frame.pack()
 
-imgLogo = PhotoImage(file='images/nerdle_logo_new.png')
+imgLogo = PhotoImage(file='images/nerdle_logo.png')
 lblTitle = Label(frame, image=imgLogo, border=0).grid(row=0, column=0)
 
 entries_frame = Frame(frame, padx=5, pady=5)
